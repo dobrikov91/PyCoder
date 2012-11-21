@@ -3,4 +3,8 @@ sample - ./Pycoder.py "In file.ogg" "Out file.mp4"
 
 You can also make a piece of video encoding
 To do this, after the main parameters to specify the start time and the duration of the fragment
-sample - ./Pycoder.py "In file.ogg" "Out file.mp4" 00:01:15 00:00:20"
+sample - ./Pycoder.py "In file.ogg" "Out file.mp4" 00:01:15 00:00:20
+
+To set the video size, type two numbers - the width and height
+Video aspect ratio will be preserved
+sample - ./Pycoder.py "In file.ogg" "Out file.mp4" 00:01:15 00:00:20 640 480
