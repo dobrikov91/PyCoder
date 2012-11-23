@@ -15,24 +15,23 @@ def main(argv=sys.argv):
 		height = ""
 		width = ""
 
-		a = ""
-		b = ""		
-	
-		#get origin aspect.. but for what?	
+		origw = ""
+		origh = ""		
+
 		out = subprocess.Popen(["ffmpeg","-i",infile], stderr = subprocess.STDOUT, stdout = subprocess.PIPE)
 		for i in iter(out.stdout.readline, ""):
 			k = i.find("DAR")		
 			if k > -1:
 				j = k + 4				
 				while i[j].isdigit():				
-					a = a + i[j]
+					origw = origw + i[j]
 					j = j + 1
 				j = j + 1
 				while i[j].isdigit():				
-					b = b + i[j]
+					origh = origh + i[j]
 					j = j + 1
-		print "aspect = " + a + ':' + b
-				
+		origasp = float(origw)/float(origh)
+		
 		s = ["ffmpeg",
 		"-i", infile,
 		"-f", "mp4",
@@ -59,8 +58,14 @@ def main(argv=sys.argv):
 			s = s + ["-ss", st, "-t", length]
 		
 		if width != "" and height != "":
+			asp = float(width)/float(height)
+			if asp < origasp:
+				height = str(int(float(width) / float(origw) * float(origh)))	
+			else:
+				width = str(int(float(height) / float(origh) * float(origw)))
 			s = s + ["-s",width+'x'+height]
-
+		
+		print s
 		s = s + [outfile]		
 		t = subprocess.Popen(s, stderr = subprocess.STDOUT, stdout = subprocess.PIPE)
 		out = t.communicate()
