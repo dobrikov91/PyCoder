@@ -67,9 +67,7 @@ def main(argv=sys.argv):
 		
 		print s
 		s = s + [outfile]		
-		t = subprocess.Popen(s, stderr = subprocess.STDOUT, stdout = subprocess.PIPE)
-		out = t.communicate()
-		print out
+		print subprocess.Popen(s, stderr = subprocess.STDOUT, stdout = subprocess.PIPE).communicate()		
 	
 if __name__ == "__main__":
     main()
